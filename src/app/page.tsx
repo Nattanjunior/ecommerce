@@ -22,7 +22,7 @@ export default function Home() {
         {categoriesName.map(categoryName => (
           <div key={categoryName}>
             <h2 className="text-2xl capitalize">{categoryName}</h2>
-            <div className="flex -mx-5 overflow-x-scroll">
+            <div className="flex -mx-5 overflow-x-scroll snap-x scrollbar-hide">
               {productsInfo.filter(p => p.category === categoryName).map(productInfo => (
                 <div key={productInfo.id} className="px-5">
                   <Product
