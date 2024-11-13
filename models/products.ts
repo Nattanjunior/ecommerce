@@ -8,14 +8,15 @@ const ProductSchema = new Schema({
   picture: String,
 });
 
-interface ProductDocument {
-  name: String,
-  description: String,
-  price: Number,
-  category: String,
-  picture: String,
+export interface SchemaProps {
+  id: string
+  name: string,
+  description: string,
+  price: number,
+  category: string,
+  picture: string,
 }
 
-const Product = models.Product<ProductDocument> || model('Product', ProductSchema);
+const Product = models.Product<SchemaProps> || model('Product', ProductSchema);
 
 export default Product;
