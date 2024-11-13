@@ -11,9 +11,9 @@ export default function Product({ name, price, description, picture }: Parameter
   return (
     <div className="w-64">
       <div className="bg-blue-100 p-5 rounded-xl">
-        <Image src={picture} alt=""
+        <Image src={picture} alt="imagem-produtos"
           width={1000}
-          height={1000}
+          height={100}
         />
       </div>
       <div className="mt-2">
