@@ -1,13 +1,14 @@
 'use client'
 
-import Image from "next/image";
 import { useEffect, useState } from 'react'
 import type { SchemaProps } from "../../models/products";
-import Product from "../../components/products";
+import Product from "../components/products";
+import Footer from '@/components/footer';
 
 
 export default function Home() {
   const [productsInfo, setProductsInfo] = useState<SchemaProps[]>([])
+  const [phrase, setPhrase] = useState('')
   useEffect(() => {
     fetch('/api/products')
       .then(response => response.json())
@@ -16,29 +17,40 @@ export default function Home() {
 
   const categoriesName = [...new Set(productsInfo.map((p) => p.category))]
 
+  let products;
+  if (phrase) {
+    products = productsInfo.filter(p => p.name.toLocaleLowerCase().includes(phrase));
+  } else {
+    products = productsInfo;
+  }
+
   return (
     <div className="p-5">
-      <section>
+      <input type="text" value={phrase} onChange={e => setPhrase(e.target.value)} placeholder='Search for products...' className='bg-gray-100 w-full py-2 px-4 rounded-xl outline-none text-black' />
+      <main>
         {categoriesName.map(categoryName => (
-          <div key={categoryName}>
-            <h2 className="text-2xl capitalize">{categoryName}</h2>
-            <div className="flex -mx-5 overflow-x-scroll snap-x scrollbar-hide">
-              {productsInfo.filter(p => p.category === categoryName).map(productInfo => (
-                <div key={productInfo.id} className="px-5">
-                  <Product
-                    name={productInfo.name}
-                    price={productInfo.price}
-                    description={productInfo.description}
-                    picture={productInfo.picture}
-                  />
+          <section key={categoryName}>
+            {products.find(p => p.category === categoryName) && (
+              <div>
+                <h2 className="text-2xl py-5 capitalize">{categoryName}</h2>
+                <div className="flex -mx-5 overflow-x-scroll snap-x scrollbar-hide">
+                  {products.filter(p => p.category === categoryName).map((productInfo, index) => (
+                    <div key={index} className="px-5 snap-start">
+                      <Product
+                        name={productInfo.name}
+                        price={productInfo.price}
+                        description={productInfo.description}
+                        picture={productInfo.picture}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            )}
+          </section>
         ))}
-        {/* <div className="py-4">
-        </div> */}
-      </section>
+      </main>
     </div>
   );
 }
+
