@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import type { SchemaProps } from "../../models/products";
 import Product from "../components/products";
-import Footer from '@/components/footer';
 
 
 export default function Home() {
@@ -37,6 +36,7 @@ export default function Home() {
                   {products.filter(p => p.category === categoryName).map((productInfo, index) => (
                     <div key={index} className="px-5 snap-start">
                       <Product
+                        _id={productInfo._id}
                         name={productInfo.name}
                         price={productInfo.price}
                         description={productInfo.description}
