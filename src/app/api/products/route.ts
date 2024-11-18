@@ -7,10 +7,8 @@ export default async function findAllProducts() {
 }
 
 export async function GET(req: Request) {
-
   try {
     await initMongoose();
-
     const url = new URL(req.url)
     const ids = url.searchParams.get("ids")
     if (ids) {
