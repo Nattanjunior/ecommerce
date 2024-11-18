@@ -9,7 +9,7 @@ const ProductSchema = new Schema({
 });
 
 export interface SchemaProps {
-  id: string
+  _id: string
   name: string,
   description: string,
   price: number,
