@@ -2,7 +2,7 @@ import { initMongoose } from "../../../../lib/mongoose";
 import Product from "../../../../models/products";
 
 
-export default async function findAllProducts() {
+export async function findAllProducts() {
   return Product.find().exec()
 }
 
