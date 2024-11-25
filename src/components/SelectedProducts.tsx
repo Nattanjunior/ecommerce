@@ -1,10 +1,9 @@
 import { create } from 'zustand'
-import useLocalStorageState from 'use-local-storage-state'
 import { persist } from 'zustand/middleware'
 
 type SelectedProductsProps = {
   selectedProducts: string[]
-  setSelectedProducts: (data: string[]) => void
+  setSelectedProducts: (data: string[] | ((prev: string[]) => string[])) => void
 }
 
 //Usando zustand middleware `persist` para armazenar dados no localStorage
@@ -14,7 +13,10 @@ export const useDataStore = create<SelectedProductsProps>()(
       selectedProducts: [],
 
       setSelectedProducts: (data) => {
-        set((state) => ({ selectedProducts: [...state.selectedProducts, ...data] }))
+        set((state) => ({
+          selectedProducts:
+            typeof data === "function" ? data(state.selectedProducts) : [...state.selectedProducts, ...data],
+        }));
       },
     }),
     {
